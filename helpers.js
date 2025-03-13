@@ -7,3 +7,5 @@ export const isNight = () => {
 
   return hour < 9 || hour > 20;
 };
+
+export const toUTC = (date) => new Date(date).toUTCString();

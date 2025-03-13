@@ -1,7 +1,7 @@
 import { Telegraf } from "telegraf";
 import { getCurrency } from "./currency.js";
 import { HALF_HOUR } from "./consts.js";
-import { isNight } from "./helpers.js";
+import { isNight, toUTC } from "./helpers.js";
 
 const API_KEY = process.env.API_KEY;
 const bot = new Telegraf(API_KEY);
@@ -18,7 +18,7 @@ setInterval(async () => {
     await bot.telegram.sendMessage(
       id,
       `
-UPDATES ${currency.lastUpdate}
+UPDATES ${toUTC(currency.lastUpdate)}
 
 USD sell from 200: ${currency.usdSellFrom200}
 USD sell from 1000: ${currency.usdSellFrom1000}
@@ -33,7 +33,7 @@ bot.command("usd", async (ctx) => {
 
   ctx.sendMessage(
     `
-LAST UPDATE ${currency.lastUpdate}
+LAST UPDATE ${toUTC(currency.lastUpdate)}
 
 USD sell from 200: ${currency.usdSellFrom200}
 USD sell from 1000: ${currency.usdSellFrom1000}`
@@ -45,7 +45,7 @@ bot.command("eur", async (ctx) => {
 
   ctx.sendMessage(
     `
-LAST UPDATE ${currency.lastUpdate}
+LAST UPDATE ${toUTC(currency.lastUpdate)}
 
 EUR sell from 200: ${currency.eurSellFrom200}
 EUR sell from 1000: ${currency.eurSellFrom1000}`
