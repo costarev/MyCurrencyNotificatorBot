@@ -1,10 +1,10 @@
 {
   "name": "currency-bot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/index.js"
   },
   "author": "",
   "license": "ISC",
