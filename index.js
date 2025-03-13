@@ -17,7 +17,13 @@ setInterval(async () => {
   subscribers.forEach(async (id) => {
     await bot.telegram.sendMessage(
       id,
-      `UPDATES\n\nUSD sell from 200: ${currency.usdSellFrom200}\nUSD sell from 1000: ${currency.usdSellFrom1000}`
+      `
+UPDATES ${currency.lastSuccessUpdate}
+
+USD sell from 200: ${currency.usdSellFrom200}
+USD sell from 1000: ${currency.usdSellFrom1000}
+EUR sell from 200: ${currency.eurSellFrom200}
+EUR sell from 1000: ${currency.eurSellFrom1000}`
     );
   });
 }, HALF_HOUR);
@@ -26,7 +32,23 @@ bot.command("usd", async (ctx) => {
   const currency = await getCurrency();
 
   ctx.sendMessage(
-    `Sell from 200: ${currency.usdSellFrom200}\nSell from 1000: ${currency.usdSellFrom1000}`
+    `
+LAST UPDATE ${currency.lastSuccessUpdate}
+
+USD sell from 200: ${currency.usdSellFrom200}
+USD sell from 1000: ${currency.usdSellFrom1000}`
+  );
+});
+
+bot.command("eur", async (ctx) => {
+  const currency = await getCurrency();
+
+  ctx.sendMessage(
+    `
+LAST UPDATE ${currency.lastSuccessUpdate}
+
+EUR sell from 200: ${currency.eurSellFrom200}
+EUR sell from 1000: ${currency.eurSellFrom1000}`
   );
 });
 
