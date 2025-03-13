@@ -18,7 +18,7 @@ setInterval(async () => {
     await bot.telegram.sendMessage(
       id,
       `
-UPDATES ${currency.lastSuccessUpdate}
+UPDATES ${currency.lastUpdate}
 
 USD sell from 200: ${currency.usdSellFrom200}
 USD sell from 1000: ${currency.usdSellFrom1000}
@@ -33,7 +33,7 @@ bot.command("usd", async (ctx) => {
 
   ctx.sendMessage(
     `
-LAST UPDATE ${currency.lastSuccessUpdate}
+LAST UPDATE ${currency.lastUpdate}
 
 USD sell from 200: ${currency.usdSellFrom200}
 USD sell from 1000: ${currency.usdSellFrom1000}`
@@ -45,7 +45,7 @@ bot.command("eur", async (ctx) => {
 
   ctx.sendMessage(
     `
-LAST UPDATE ${currency.lastSuccessUpdate}
+LAST UPDATE ${currency.lastUpdate}
 
 EUR sell from 200: ${currency.eurSellFrom200}
 EUR sell from 1000: ${currency.eurSellFrom1000}`

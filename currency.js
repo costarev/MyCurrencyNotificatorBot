@@ -1,13 +1,13 @@
 import { JSDOM } from "jsdom";
 import { TEN_MINUTES } from "./consts.js";
 
-const currencyCache = {
+const currencyState = {
   usdSellFrom200: null,
   usdSellFrom1000: null,
   eurSellFrom200: null,
   eurSellFrom1000: null,
+  lastUpdate: 0,
 };
-let lastUpdate = 0;
 
 async function getCurrencyHtml() {
   const res = await fetch("https://www.valuta812.ru/");
@@ -40,26 +40,25 @@ async function getCurrencyFromHtml() {
 }
 
 async function updateCurrency() {
+  const now = Date.now();
+
   try {
     const currency = await getCurrencyFromHtml();
 
-    currencyCache.usdSellFrom1000 = currency.usdSellFrom1000;
-    currencyCache.usdSellFrom200 = currency.usdSellFrom200;
-    currencyCache.eurSellFrom1000 = currency.eurSellFrom1000;
-    currencyCache.eurSellFrom200 = currency.eurSellFrom200;
-    lastUpdate = now;
+    currencyState.usdSellFrom1000 = currency.usdSellFrom1000;
+    currencyState.usdSellFrom200 = currency.usdSellFrom200;
+    currencyState.eurSellFrom1000 = currency.eurSellFrom1000;
+    currencyState.eurSellFrom200 = currency.eurSellFrom200;
+    currencyState.lastUpdate = now;
   } catch (e) {}
 }
 
 export async function getCurrency() {
-  const now = Date.now();
-
-  if (now - lastUpdate > TEN_MINUTES) {
+  if (Date.now() - currencyState.lastUpdate > TEN_MINUTES) {
     await updateCurrency();
   }
 
   return {
-    ...currencyCache,
-    lastSuccessUpdate: new Date(lastUpdate),
+    ...currencyState,
   };
 }
