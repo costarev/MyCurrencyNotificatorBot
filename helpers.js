@@ -1,5 +1,9 @@
-export const isNight = () => {
-  const hour = new Date().getHours();
+export const getMskHours = () => {
+  return (new Date().getUTCHours() + 3) % 24;
+};
 
-  return (hour >= 0 && hour < 8) || hour > 21;
+export const isNight = () => {
+  const hour = getMskHours();
+
+  return hour < 9 || hour > 20;
 };
