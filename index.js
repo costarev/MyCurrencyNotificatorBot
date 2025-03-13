@@ -1,6 +1,6 @@
 import { Telegraf } from "telegraf";
 import { getCurrency } from "./currency.js";
-import { ONE_HOUR } from "./consts.js";
+import { HALF_HOUR } from "./consts.js";
 import { isNight } from "./helpers.js";
 
 const API_KEY = process.env.API_KEY;
@@ -20,7 +20,7 @@ setInterval(async () => {
       `UPDATES\n\nUSD sell from 200: ${currency.usdSellFrom200}\nUSD sell from 1000: ${currency.usdSellFrom1000}`
     );
   });
-}, ONE_HOUR);
+}, HALF_HOUR);
 
 bot.command("usd", async (ctx) => {
   const currency = await getCurrency();
