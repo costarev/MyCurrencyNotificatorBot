@@ -41,6 +41,6 @@ export function unsubscribe(id) {
     return false;
   }
 
-  subscribers.delete();
+  subscribers.delete(id);
   return true;
 }
