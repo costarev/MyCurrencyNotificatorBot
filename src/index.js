@@ -43,7 +43,7 @@ bot.command("unsubscribe", async (ctx) => {
 });
 
 bot.launch(() => {
-  handleSubscribers();
+  handleSubscribers(bot);
 });
 
 // Enable graceful stop

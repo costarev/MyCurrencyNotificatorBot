@@ -4,7 +4,7 @@ import { getCurrency } from "./currency.js";
 
 const subscribers = new Set();
 
-export function handleSubscribers() {
+export function handleSubscribers(bot) {
   setInterval(async () => {
     if (isNight()) {
       return;
