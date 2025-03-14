@@ -2,10 +2,14 @@ import { JSDOM } from "jsdom";
 import { TEN_MINUTES } from "./consts.js";
 
 const currencyState = {
-  usdSellFrom200: null,
-  usdSellFrom1000: null,
-  eurSellFrom200: null,
-  eurSellFrom1000: null,
+  usdSellFrom200: 0,
+  usdSellFrom200Diff: 0,
+  usdSellFrom1000: 0,
+  usdSellFrom1000Diff: 0,
+  eurSellFrom200: 0,
+  eurSellFrom200Diff: 0,
+  eurSellFrom1000: 0,
+  eurSellFrom1000Diff: 0,
   lastUpdate: 0,
 };
 
@@ -32,10 +36,10 @@ async function getCurrencyFromHtml() {
   );
 
   return {
-    usdSellFrom200: usdSellFrom200Element.textContent,
-    usdSellFrom1000: usdSellFrom1000Element.textContent,
-    eurSellFrom200: eurSellFrom200Element.textContent,
-    eurSellFrom1000: eurSellFrom1000Element.textContent,
+    usdSellFrom200: Number(usdSellFrom200Element.textContent),
+    usdSellFrom1000: Number(usdSellFrom1000Element.textContent),
+    eurSellFrom200: Number(eurSellFrom200Element.textContent),
+    eurSellFrom1000: Number(eurSellFrom1000Element.textContent),
   };
 }
 
@@ -43,12 +47,24 @@ async function updateCurrency() {
   const now = Date.now();
 
   try {
-    const currency = await getCurrencyFromHtml();
+    const actualCurrency = await getCurrencyFromHtml();
 
-    currencyState.usdSellFrom1000 = currency.usdSellFrom1000;
-    currencyState.usdSellFrom200 = currency.usdSellFrom200;
-    currencyState.eurSellFrom1000 = currency.eurSellFrom1000;
-    currencyState.eurSellFrom200 = currency.eurSellFrom200;
+    currencyState.usdSellFrom1000Diff =
+      actualCurrency.usdSellFrom1000 - currencyState.usdSellFrom1000;
+    currencyState.usdSellFrom1000 = actualCurrency.usdSellFrom1000;
+
+    currencyState.usdSellFrom200Diff =
+      actualCurrency.usdSellFrom200 - currencyState.usdSellFrom200;
+    currencyState.usdSellFrom200 = actualCurrency.usdSellFrom200;
+
+    currencyState.eurSellFrom1000Diff =
+      actualCurrency.eurSellFrom1000 - currencyState.eurSellFrom1000;
+    currencyState.eurSellFrom1000 = actualCurrency.eurSellFrom1000;
+
+    currencyState.eurSellFrom200Diff =
+      actualCurrency.eurSellFrom200 - currencyState.eurSellFrom200;
+    currencyState.eurSellFrom200 = actualCurrency.eurSellFrom200;
+
     currencyState.lastUpdate = now;
   } catch (e) {}
 }

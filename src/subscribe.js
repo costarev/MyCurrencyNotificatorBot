@@ -12,18 +12,26 @@ export function handleSubscribers(bot) {
 
     const currency = await getCurrency();
 
-    subscribers.forEach(async (id) => {
-      await bot.telegram.sendMessage(
-        id,
-        `
-      UPDATES ${toUTC(currency.lastUpdate)}
-      
-      USD sell from 200: ${currency.usdSellFrom200}
-      USD sell from 1000: ${currency.usdSellFrom1000}
-      EUR sell from 200: ${currency.eurSellFrom200}
-      EUR sell from 1000: ${currency.eurSellFrom1000}`
-      );
-    });
+    if (
+      currency.eurSellFrom1000Diff ||
+      currency.eurSellFrom200Diff ||
+      currency.usdSellFrom1000Diff ||
+      currency.usdSellFrom200Diff
+    ) {
+      subscribers.forEach(async (id) => {
+        await bot.telegram.sendMessage(
+          id,
+          `
+UPDATES
+${toUTC(currency.lastUpdate)}
+        
+USD sell from 200: ${currency.usdSellFrom200}
+USD sell from 1000: ${currency.usdSellFrom1000}
+EUR sell from 200: ${currency.eurSellFrom200}
+EUR sell from 1000: ${currency.eurSellFrom1000}`
+        );
+      });
+    }
   }, HALF_HOUR);
 }
 
